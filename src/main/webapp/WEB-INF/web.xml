@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+
+	<display-name>acma-admin-web</display-name>
+
+	<context-param>
+	    <param-name>com.sun.faces.numberOfViewsInSession</param-name>
+	    <param-value>15</param-value>
+	</context-param>
+	<context-param>
+		<param-name>com.sun.faces.verifyObjects</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<context-param>
+	    <param-name>com.sun.faces.numberOfLogicalViews</param-name>
+	    <param-value>15</param-value>
+	</context-param>
+	<context-param>
+	    <param-name>com.sun.faces.autoCompleteOffOnViewState</param-name>
+	    <param-value>false</param-value>
+	</context-param>
+	<context-param>
+		<param-name>com.sun.faces.externalizeJavaScript</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+    	<param-name>com.sun.faces.compressViewState</param-name>
+   	   <param-value>false</param-value>
+	</context-param>
+	<context-param>
+    	<param-name>com.sun.faces.serializeServerState</param-name>
+   	   <param-value>false</param-value>
+	</context-param>
+	<context-param>
+	    <param-name>com.sun.faces.responseBufferSize</param-name>
+	    <param-value>500000</param-value>
+    </context-param>
+    <context-param>
+	    <param-name>com.sun.faces.enabledJSStyleHiding</param-name>
+	    <param-value>false</param-value>
+    </context-param>
+    <context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Production</param-value>
+	</context-param>
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>client</param-value>
+	</context-param>
+	<context-param>
+          <param-name>javax.faces.VALIDATE_EMPTY_FIELDS</param-name>
+           <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.validator.DISABLE_DEFAULT_BEAN_VALIDATOR</param-name>
+        <param-value>true</param-value>
+	</context-param>
+    <context-param>
+  		<param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+  		<param-value>true</param-value>
+ 	</context-param> 
+ 	
+    <!--  Facelets tuning -->
+	<context-param>
+		<param-name>facelets.RECREATE_VALUE_EXPRESSION_ON_BUILD_BEFORE_RESTORE</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<context-param>
+		<param-name>facelets.BUILD_BEFORE_RESTORE</param-name>
+		<param-value>false</param-value>
+	</context-param> 
+	<context-param>
+		<param-name>facelets.DEVELOPMENT</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<context-param>	
+		<param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
+		<param-value>-1</param-value>
+	</context-param>
+	
+	<!--  RichFaces tuning -->
+	<context-param>
+	    <param-name>javax.faces.PARTIAL_STATE_SAVING</param-name>
+	    <param-value>false</param-value>
+	</context-param>
+	<context-param>
+		<param-name>org.richfaces.skin</param-name>
+		<param-value>classic</param-value>
+	</context-param>
+	<context-param>	
+		<param-name>org.richfaces.LoadScriptStrategy</param-name>	
+		<param-value>ALL</param-value>	
+	</context-param>
+	<context-param>	
+		<param-name>org.richfaces.LoadStyleStrategy</param-name>
+		<param-value>ALL</param-value>	
+	</context-param>
+	<context-param>
+		<param-name>org.ajax4jsf.xmlparser.NEKO</param-name>
+		<param-value>.*\..*</param-value>
+	</context-param>
+	
+	<context-param>
+	   <param-name>com.sun.faces.enableRestoreView11Compatibility</param-name>
+	   <param-value>true</param-value>
+	</context-param>
+	
+	<context-param>
+   	   <param-name>org.apache.myfaces.SERIALIZE_STATE_IN_SESSION</param-name>
+   	   <param-value>false</param-value>
+	</context-param>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>ApplicationLogOutServlet</display-name>
+		<servlet-name>ApplicationLogOutServlet</servlet-name>
+		<servlet-class>pe.com.bcp.acma.admin.web.util.session.ApplicationLogOutServlet</servlet-class>
+	</servlet>
+	
+	<!-- Resource Servlet - serves static resources and resources for specific components -->
+    <servlet>
+        <servlet-name>Resource Servlet</servlet-name>
+        <servlet-class>org.richfaces.webapp.ResourceServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>Resource Servlet</servlet-name>
+        <url-pattern>/org.richfaces.resources/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+		<description>
+		</description>
+		<display-name>DownloadServletAdmin</display-name>
+		<servlet-name>DownloadServletAdmin</servlet-name>
+		<servlet-class>pe.com.bcp.acma.admin.web.servlet.DownloadServletAdmin</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<description>
+		</description>
+		<display-name>DownloadServletDinamica</display-name>
+		<servlet-name>DownloadServletDinamica</servlet-name>
+		<servlet-class>pe.com.bcp.acma.admin.web.servlet.DownloadServletDinamica</servlet-class>
+	</servlet>
+    
+    <filter>
+		<display-name>SessionHandlerListener</display-name>
+		<filter-name>SessionHandlerListener</filter-name>
+		<filter-class>pe.com.bcp.acma.admin.web.util.session.SessionHandlerListener</filter-class>
+	</filter>
+	
+	<servlet>
+		    <description>Servlet for REST Services</description>
+		    <servlet-name>RestServiceServlet</servlet-name>
+		    <servlet-class>com.ibm.websphere.jaxrs.server.IBMRestServlet</servlet-class>
+		    <init-param>
+		      <param-name>javax.ws.rs.Application</param-name>
+		      <param-value>pe.com.bcp.acma.admin.web.service.RegistrationApplication</param-value>
+		    </init-param>
+		    <load-on-startup>3</load-on-startup>
+		  </servlet>
+	<servlet-mapping>
+        <servlet-name>RestServiceServlet</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+	
+	<session-config>
+		<session-timeout>2</session-timeout>
+	</session-config>
+	
+	
+	<!-- JSF mapping -->
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>DownloadServletAdmin</servlet-name>
+		<url-pattern>/DownloadServletAdmin</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DownloadServletDinamica</servlet-name>
+		<url-pattern>/DownloadServletDinamica</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+  		<servlet-name>ApplicationLogOutServlet</servlet-name> 
+  		<url-pattern>/ApplicationLogOutServlet</url-pattern> 
+ 	</servlet-mapping>
+	<error-page>
+		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
+		<location>/sessionPrincipal.xhtml</location>
+	</error-page>
+	
+	<servlet>
+	  <servlet-name>LoginServlet</servlet-name>
+	  <servlet-class>pe.com.bcp.acma.admin.web.servlet.LoginServlet</servlet-class>
+	  <init-param>
+	      <param-name>app.name</param-name>
+	      <param-value>Administrador-Web</param-value>
+	  </init-param>
+	  <load-on-startup>0</load-on-startup>
+	</servlet>
+	
+	 <servlet-mapping>
+	    <servlet-name>LoginServlet</servlet-name>
+	    <url-pattern>/LoginServlet</url-pattern>
+	  </servlet-mapping>
+	<!-- 
+		<security-constraint id="SecurityConstraint_1">
+		    <web-resource-collection id="WebResourceCollection_2">
+		          <web-resource-name>logon</web-resource-name>
+		          <description>Protection area for logon</description>
+		          <url-pattern>/*</url-pattern>
+		          <http-method>GET</http-method>
+		          <http-method>POST</http-method>
+		    </web-resource-collection>
+		    <auth-constraint id="AuthConstraint_1">
+		          <description>Snoop Servlet Security</description>
+		          <role-name>spnego</role-name>
+		    </auth-constraint>
+		    <user-data-constraint id="UserDataConstraint_1">
+		          <transport-guarantee>NONE</transport-guarantee>
+		    </user-data-constraint>
+	      </security-constraint>
+	      <security-role id="SecurityRole_1">
+		      <description>Users Role Spnego</description>
+		      <role-name>spnego</role-name>
+	      </security-role>   -->
+
+	<!-- Map these files with JSF -->
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>/pages/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.faces</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+	
+	<welcome-file-list>
+ 		<welcome-file>/login.xhtml</welcome-file> 
+    </welcome-file-list>
+
+</web-app>

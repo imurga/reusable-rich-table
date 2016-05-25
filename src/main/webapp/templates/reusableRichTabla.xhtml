@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	<rich:dataTable id="#{tablaId}" var="it"
+		value="#{richFacesCompMBean.arlTablaList.get(tabIndex)}" 
+		styleClass="stable_ " rowClasses="odd-row, even-row" style="width:100%;"
+		rowKeyVar="intRowId" >
+		<a4j:ajax event="rowdblclick"
+			onbegin="displayElemento('div_capaMayor', '');"
+			listener="#{richFacesCompMBean.doRowDblClk(intRowId, dblClkAct, classN, tabIndex)}"
+			execute="@all" render="bodyToReRender, txtMensajeDeError, txtMensajeDeExito" 
+			oncomplete="displayElemento('div_capaMayor', 'none'); #{facesContext.validationFailed} ? displayElemento('error_div', '') : displayElemento('error_div', 'none'); displayElemento('exito_div', 'none');" />
+		<c:forEach var="newItem" items="#{colList.get(tabIndex)}">
+			<rich:column styleClass="noRowBorders">
+				<f:facet name="header">
+					<a4j:commandLink value="#{newItem.strCampoNombre}" onclick="displayElemento('div_capaMayor', '');"
+						styleClass="commandLink_componenteTabla" oncomplete="displayElemento('div_capaMayor', 'none');"
+						onbeforedomupdate="displayElemento('exito_div', 'none'), displayElemento('error_div', 'none')"
+						action="#{richFacesCompMBean.doSort(tabIndex, rowCount)}"
+						render="#{tablaId} #{sigienteId} #{primeroId} #{ultimoId} #{previoId} #{firstPag} #{secondPag} #{thirdPag} #{jQueryBlkId} #{rndPaginacion}"
+						rendered="#{newItem.strCampoTipo == '1' or newItem.strCampoTipo == '5' or newItem.strCampoTipo == '4' or newItem.strCampoTipo == '8' or newItem.strCampoTipo == '9' or newItem.strCampoTipo == '13'}">
+						<a4j:param name="sortParameter"
+							assignTo="#{richFacesCompMBean.strSortCol[tabIndex]}"
+							value="#{newItem.strCampoNombre}_#{newItem.strCampoTipo}" />
+					</a4j:commandLink>
+					<a4j:commandLink value="#{newItem.strCampoNombre}" onclick="displayElemento('div_capaMayor', '');"
+						styleClass="commandLink_RegEnt_componenteTabla" oncomplete="displayElemento('div_capaMayor', 'none');"
+						action="#{richFacesCompMBean.doSort(tabIndex, rowCount)}"
+						onbeforedomupdate="displayElemento('exito_div', 'none'), displayElemento('error_div', 'none')"
+						render="#{tablaId} #{sigienteId} #{primeroId} #{ultimoId} #{previoId} #{firstPag} #{secondPag} #{thirdPag} #{jQueryBlkId} #{rndPaginacion}"
+						rendered="#{newItem.strCampoTipo == '10'}">
+						<a4j:param name="sortParameter"
+							assignTo="#{richFacesCompMBean.strSortCol[tabIndex]}"
+							value="#{newItem.strCampoNombre}" />
+					</a4j:commandLink>
+					<a4j:commandLink value="#{newItem.strCampoNombre}" onclick="displayElemento('div_capaMayor', '');"
+						styleClass="commandLink_RegSal_componenteTabla" oncomplete="displayElemento('div_capaMayor', 'none');"
+						action="#{richFacesCompMBean.doSort(tabIndex, rowCount)}"
+						onbeforedomupdate="displayElemento('exito_div', 'none'), displayElemento('error_div', 'none')"
+						render="#{tablaId} #{sigienteId} #{previoId} #{primeroId} #{ultimoId} #{firstPag} #{secondPag} #{thirdPag} #{jQueryBlkId} #{rndPaginacion}"
+						rendered="#{newItem.strCampoTipo == '11'}">
+						<a4j:param name="sortParameter"
+							assignTo="#{richFacesCompMBean.strSortCol[tabIndex]}"
+							value="#{newItem.strCampoNombre}" />
+					</a4j:commandLink>
+					<h:graphicImage value="/resources/images/sort_neutral.png"
+						rendered="#{((richFacesCompMBean.strSortType[tabIndex]!='descending' and richFacesCompMBean.strSortType[tabIndex]!='ascending') or richFacesCompMBean.strSortCol[tabIndex] != newItem.strCampoNombre) and (newItem.strCampoTipo != '2' and newItem.strCampoTipo != '3' and newItem.strCampoTipo != '6' and newItem.strCampoTipo != '7')}" />
+					<h:graphicImage value="/resources/images/sort_des_alt.png"
+						rendered="#{richFacesCompMBean.strSortType[tabIndex]=='descending' and newItem.strCampoTipo != '2' and newItem.strCampoTipo != '3' and newItem.strCampoTipo != '6' and newItem.strCampoTipo != '7' and richFacesCompMBean.strSortCol[tabIndex] == newItem.strCampoNombre}" />
+					<h:graphicImage value="/resources/images/sort_asc_alt.png"
+						rendered="#{richFacesCompMBean.strSortType[tabIndex]=='ascending' and newItem.strCampoTipo != '2' and newItem.strCampoTipo != '3' and newItem.strCampoTipo != '6' and newItem.strCampoTipo != '7' and richFacesCompMBean.strSortCol[tabIndex] == newItem.strCampoNombre}" />
+					<h:outputText value="#{newItem.strCampoNombre}"
+						rendered="#{newItem.strCampoTipo == '2' or newItem.strCampoTipo == '6'}"
+						styleClass="prioridad_componenteTabla" />
+					<br></br>
+					<h:inputText value="#{newItem.strCampoValor}"
+						styleClass="filtro_componenteTabla" style="text-transform : uppercase;"
+						rendered="#{newItem.strCampoTipo == '1' or newItem.strCampoTipo == '8' or newItem.strCampoTipo == '10' or newItem.strCampoTipo == '11' or newItem.strCampoTipo == '13'}"
+						onblur="return reemplazarAMayuscula(this);">
+						<a4j:ajax event="keyup"
+							listener="#{richFacesCompMBean.doFiltro(colList.get(tabIndex), tabIndex, rowCount)}"
+							onbeforedomupdate="displayElemento('exito_div', 'none'), displayElemento('error_div', 'none')"
+							render="#{tablaId}@body #{scroller} #{jQueryBlkId} #{rndPaginacion}" execute="@form" />
+					</h:inputText>
+					<h:inputText value="#{newItem.strCampoValor}"
+						styleClass="filtro_componenteTabla"
+						rendered="#{newItem.strCampoTipo == '5'}"
+						onkeyup="this.value=valorFiltro(this.value)">
+						<a4j:ajax event="keyup"
+							listener="#{richFacesCompMBean.doFiltro(colList.get(tabIndex), tabIndex, rowCount)}"
+							onbeforedomupdate="displayElemento('exito_div', 'none'), displayElemento('error_div', 'none')"
+							render="#{tablaId}@body #{scroller} #{jQueryBlkId} #{rndPaginacion}" execute="@form" />
+					</h:inputText>
+					<h:selectBooleanCheckbox rendered="#{newItem.strCampoTipo == '3'}"
+						value="#{richFacesCompMBean.blnChkBoxMain[tabIndex]}">
+						<a4j:ajax event="click" execute="@all" render="#{chkBoxRender} #{jQueryBlkId}"
+							listener="#{richFacesCompMBean.selectAllCheckBox(tabIndex, richFacesCompMBean.blnChkBoxMain[tabIndex], colList.get(tabIndex),chkBoxAct, classN)}"></a4j:ajax>
+					</h:selectBooleanCheckbox>
+				</f:facet>
+				<h:outputText value="#{it.get(newItem.strCampoNombre)}" rendered="#{newItem.strCampoTipo == '1' or newItem.strCampoTipo == '5' or newItem.strCampoTipo == '4' or newItem.strCampoTipo == '9' or newItem.strCampoTipo == '10' or newItem.strCampoTipo == '11' or newItem.strCampoTipo == '13'}" />
+				<h:outputText value="#{it.get((newItem.strCampoToolTip))}" rendered="#{newItem.strCampoTipo == '8'}" />
+				
+				<!--rich:tooltip styleClass="tooltip" layout="block"
+					rendered="#{newItem.strCampoTipo == '8'}" showDelay="150" onhide="true" hideEvent="mouseleave" onbeforehide="true">
+					<span class="wrap"> <h:outputText
+							value="#{it.get(newItem.strCampoNombre)}" /> </span>
+				</rich:tooltip-->
+				
+				<a4j:commandLink binding="#{newItem.objCommandLink}"
+					onclick="displayElemento('div_capaMayor', '');displayElemento('exito_div', 'none'); displayElemento('error_div', 'none');"
+					disabled="#{it.get('Disable')}"
+					oncomplete="displayElemento('div_capaMayor', 'none'); if(#{facesContext.validationFailed}) displayElemento('error_div', ''); if(!#{facesContext.validationFailed}) #{richFacesCompMBean.openPopUp(newItem.strIdPopUp)};"
+					rendered="#{newItem.strCampoTipo == '2' or newItem.strCampoTipo == '7'}"
+					styleClass="decoration_componenteTabla">
+					<h:graphicImage value="#{it.get(newItem.strCampoNombre)}"
+						styleClass="imagen_componenteTabla" />
+				</a4j:commandLink>
+				<h:graphicImage value="#{it.get(newItem.strCampoNombre)}"
+					styleClass="imagen_componenteTabla"
+					rendered="#{newItem.strCampoTipo == '6'}" />
+				<h:selectBooleanCheckbox rendered="#{newItem.strCampoTipo == '3'}"
+					value="#{newItem.blnChkBoxVal}">
+					<a4j:ajax event="click" execute="@all" render="#{chkSingleBoxRender} #{jQueryBlkId}" listener="#{richFacesCompMBean.selectOneCheckBox(tabIndex, it, chkBoxAct, classN)}"></a4j:ajax>
+				</h:selectBooleanCheckbox>
+			</rich:column>
+		</c:forEach>
+	</rich:dataTable>
+	<br></br>
+
+ 	<rich:panel id="#{scroller}" style="border: 1px solid white; line-height:1 !important; background-color: white;">
+	<c:choose>
+		<c:when test="#{richFacesCompMBean.noPages[tabIndex] != '0' and richFacesCompMBean.noPages[tabIndex] != '1'}">
+			<div class="divDerecha">
+				<table cellpadding="5" class="colorPaginador">
+					<tr>
+						<td class="colorPaginador"><a4j:commandLink id="#{primeroId}" onclick="displayElemento('div_capaMayor', '');"
+							value="Primero" styleClass="commandLink_componenteTabla" oncomplete="displayElemento('div_capaMayor', 'none');"
+							action="#{richFacesCompMBean.doPagination(richFacesCompMBean.firstPage, tabIndex, rowCount)}"
+							onbeforedomupdate="displayElemento('exito_div', 'none'), displayElemento('error_div', 'none')"
+							render="#{scroller} #{tablaId} #{jQueryBlkId} #{rndPaginacion}"
+							rendered="#{richFacesCompMBean.renderPrimero[tabIndex]}">
+						</a4j:commandLink></td>
+						<td><h:outputText value="|"
+							rendered="#{richFacesCompMBean.renderPrimero[tabIndex]}"></h:outputText>
+						</td>
+						<td class="colorPaginador"><a4j:commandLink id="#{previoId}" onclick="displayElemento('div_capaMayor', '');"
+								value="Anterior" styleClass="commandLink_componenteTabla" oncomplete="displayElemento('div_capaMayor', 'none');"
+								action="#{richFacesCompMBean.doPagination(richFacesCompMBean.intPageNumber[tabIndex] - 1, tabIndex, rowCount)}"
+								onbeforedomupdate="displayElemento('exito_div', 'none'), displayElemento('error_div', 'none')"
+								render="#{scroller} #{tablaId} #{jQueryBlkId} #{rndPaginacion}"
+								rendered="#{richFacesCompMBean.renderPrevio[tabIndex]}">
+							</a4j:commandLink></td>
+						<td><h:outputText value="|"
+								rendered="#{richFacesCompMBean.renderPrevio[tabIndex]}"></h:outputText>
+						</td>
+						<td class="colorPaginador"><a4j:commandLink id="#{firstPag}" onclick="displayElemento('div_capaMayor', '');"
+								value="#{richFacesCompMBean.valueFirst[tabIndex]}" oncomplete="displayElemento('div_capaMayor', 'none');"
+								disabled="#{richFacesCompMBean.disableFirst[tabIndex]}"
+								styleClass="commandLink_componenteTabla"
+								action="#{richFacesCompMBean.doPagination(richFacesCompMBean.valueFirst[tabIndex], tabIndex, rowCount)}"
+								onbeforedomupdate="displayElemento('exito_div', 'none'), displayElemento('error_div', 'none')"
+								render="#{scroller} #{tablaId} #{jQueryBlkId} #{rndPaginacion}"
+								rendered="#{richFacesCompMBean.renderFirst[tabIndex]}">
+							</a4j:commandLink></td>
+						<td><h:outputText value="|"
+								rendered="#{richFacesCompMBean.renderSecond[tabIndex]}"></h:outputText>
+						</td>
+						<td class="colorPaginador"><a4j:commandLink id="#{secondPag}" onclick="displayElemento('div_capaMayor', '');"
+								value="#{richFacesCompMBean.valueSecond[tabIndex]}" oncomplete="displayElemento('div_capaMayor', 'none');"
+								disabled="#{richFacesCompMBean.disableSecond[tabIndex]}"
+								styleClass="commandLink_componenteTabla"
+								action="#{richFacesCompMBean.doPagination(richFacesCompMBean.valueSecond[tabIndex], tabIndex, rowCount)}"
+								onbeforedomupdate="displayElemento('exito_div', 'none'), displayElemento('error_div', 'none')"
+								render="#{scroller} #{tablaId} #{jQueryBlkId} #{rndPaginacion}"
+								rendered="#{richFacesCompMBean.renderSecond[tabIndex]}">
+							</a4j:commandLink></td>
+						<td><h:outputText value="|"
+								rendered="#{richFacesCompMBean.renderThird[tabIndex]}"></h:outputText>
+						</td>
+						<td class="colorPaginador"><a4j:commandLink id="#{thirdPag}" onclick="displayElemento('div_capaMayor', '');"
+								value="#{richFacesCompMBean.valueThird[tabIndex]}" oncomplete="displayElemento('div_capaMayor', 'none');"
+								disabled="#{richFacesCompMBean.disableThird[tabIndex]}"
+								styleClass="commandLink_componenteTabla"
+								action="#{richFacesCompMBean.doPagination(richFacesCompMBean.valueThird[tabIndex], tabIndex, rowCount)}"
+								onbeforedomupdate="displayElemento('exito_div', 'none'), displayElemento('error_div', 'none')"
+								render="#{scroller} #{tablaId} #{jQueryBlkId} #{rndPaginacion}"
+								rendered="#{richFacesCompMBean.renderThird[tabIndex]}">
+							</a4j:commandLink></td>
+						<td><h:outputText value="|"
+								rendered="#{richFacesCompMBean.renderSigiente[tabIndex]}"></h:outputText>
+						</td>
+						<td class="colorPaginador"><a4j:commandLink id="#{sigienteId}" onclick="displayElemento('div_capaMayor', '');"
+								value="Siguiente" styleClass="commandLink_componenteTabla" oncomplete="displayElemento('div_capaMayor', 'none');"
+								action="#{richFacesCompMBean.doPagination(richFacesCompMBean.intPageNumber[tabIndex] + 1, tabIndex, rowCount)}"
+								onbeforedomupdate="displayElemento('exito_div', 'none'), displayElemento('error_div', 'none')"
+								render="#{scroller} #{tablaId} #{jQueryBlkId} #{rndPaginacion}"
+								rendered="#{richFacesCompMBean.renderSigiente[tabIndex]}">
+							</a4j:commandLink></td>
+						<td><h:outputText value="|"
+								rendered="#{richFacesCompMBean.renderUltimo[tabIndex]}"></h:outputText>
+						</td>
+						<td class="colorPaginador"><a4j:commandLink id="#{ultimoId}" onclick="displayElemento('div_capaMayor', '');"
+							value="Ultimo" styleClass="commandLink_componenteTabla" oncomplete="displayElemento('div_capaMayor', 'none');"
+							action="#{richFacesCompMBean.doPagination(richFacesCompMBean.totalPages[tabIndex], tabIndex, rowCount)}"
+							onbeforedomupdate="displayElemento('exito_div', 'none'), displayElemento('error_div', 'none')"
+							render="#{scroller} #{tablaId} #{jQueryBlkId} #{rndPaginacion}"
+							rendered="#{richFacesCompMBean.renderUltimo[tabIndex]}">
+							</a4j:commandLink></td>
+					</tr>
+				</table>
+			</div>
+		</c:when>
+	</c:choose>
+ 	</rich:panel>
+	<a4j:outputPanel id="#{jQueryBlkId}">
+		<rich:jQuery selector=".stable_ tr" event="mouseover"
+			query="jQuery(this).addClass('active-row')" />
+		<rich:jQuery selector=".stable_ tr" event="mouseout"
+			query="jQuery(this).removeClass('active-row')" />
+	</a4j:outputPanel>
+</ui:composition>

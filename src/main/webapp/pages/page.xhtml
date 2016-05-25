@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:a4j="http://richfaces.org/a4j">
+	<rich:panel id="dynamicSet"
+		style="border: 1px solid white; line-height:1 !important;background-color: white;">
+		<div style="width: 100%; overflow-x: auto; overflow-y: hidden">
+			<ui:include src="/templates/reusableRichTabla.xhtml">
+				<ui:param name="colList"
+					value="#{someBean.columnasDeTabla}"></ui:param>
+				<ui:param name="tabIndex" value="0"></ui:param>
+				<ui:param name="tablaId" value="tablaReporte"></ui:param>
+				<ui:param name="previoId" value="previoReporte"></ui:param>
+				<ui:param name="ultimoId" value="ultimo"></ui:param>
+				<ui:param name="primeroId" value="primero"></ui:param>
+				<ui:param name="sigienteId" value="siguienteReporte"></ui:param>
+				<ui:param name="scroller" value="scrol"></ui:param>
+				<ui:param name="firstPag" value="first"></ui:param>
+				<ui:param name="secondPag" value="second"></ui:param>
+				<ui:param name="thirdPag" value="third"></ui:param>
+				<ui:param name="jQueryBlkId" value="jQueryBlk"></ui:param>
+				<ui:param name="rowCount"
+					value="#{someBean.numeroDeFilas}"></ui:param>
+				<ui:param name="dblClkAct" value="none"></ui:param>
+				<ui:param name="classN" value="none"></ui:param>
+				<ui:param name="popUpId" value="reportesPopUp"></ui:param>
+				<ui:param name="popupButonId" value="popUpButton"></ui:param>
+				<ui:param name="popUpPanelId" value="repPopUpPanel"></ui:param>
+			</ui:include>
+		</div>
+	</rich:panel>
+</ui:composition>
+
+
